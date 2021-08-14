@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 
+using System;
+
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using Repro;
