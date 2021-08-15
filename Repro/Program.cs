@@ -7,8 +7,8 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using Repro;
 
-var seader = new DocumentFactory();
-var data = seader.Generate();
+
+var data = CreateDocument();
 for (int i = 0; i < 1000; i++)
 {
     Console.WriteLine(i);
@@ -17,3 +17,25 @@ for (int i = 0; i < 1000; i++)
 }
 
 Console.WriteLine("Done");
+
+
+Document CreateDocument()
+{
+    const int documentsCount = 50;
+
+    var complexDocument = new Document();
+
+    for (var j = 0; j < documentsCount; j++)
+    {
+        var firstLevelDocument = new FirstLevelDocument();
+
+        for (var k = 0; k < documentsCount; k++)
+        {
+            firstLevelDocument.InnerDocuments.Add(new SecondLevelDocument());
+        }
+
+        complexDocument.InnerDocuments.Add(firstLevelDocument);
+    }
+
+    return complexDocument;
+}
