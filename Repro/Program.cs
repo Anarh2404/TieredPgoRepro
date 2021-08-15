@@ -11,9 +11,9 @@ var seader = new DocumentFactory();
 var data = seader.Generate();
 for (int i = 0; i < 1000; i++)
 {
-    var bytes = data.ToBson();
-    var data2 = BsonSerializer.Deserialize<Document>(bytes);
     Console.WriteLine(i);
+    var bytes = data.ToBson();
+    _ = BsonSerializer.Deserialize<Document>(bytes);
 }
 
 Console.WriteLine("Done");

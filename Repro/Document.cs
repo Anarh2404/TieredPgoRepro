@@ -6,14 +6,14 @@ namespace Repro
 {
     public class Document
     {
-        public ObjectId OldId { get; set; }
+        public ObjectId OldId { get; set; } = ObjectId.GenerateNewId();
 
-        public List<FirstLevelDocument> InnerDocuments { get; set; }
+        public List<FirstLevelDocument> InnerDocuments { get; set; } = new List<FirstLevelDocument>();
     }
 
     public class FirstLevelDocument
     {
-        public List<SecondLevelDocument> InnerDocuments { get; set; }
+        public List<SecondLevelDocument> InnerDocuments { get; set; } = new List<SecondLevelDocument>();
     }
 
     public class SecondLevelDocument

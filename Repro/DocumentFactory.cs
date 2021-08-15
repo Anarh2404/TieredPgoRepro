@@ -1,29 +1,20 @@
-﻿using System.Collections.Generic;
-
-using MongoDB.Bson;
-
-namespace Repro
+﻿namespace Repro
 {
     public class DocumentFactory
     {
         public Document Generate()
         {
-            const int innerDocumentOneCount = 50;
-            const int innerDocumentTwoCount = 25;
+            const int documentsCount = 50;
 
-            var complexDocument = new Document{OldId = ObjectId.GenerateNewId()};
-            complexDocument.InnerDocuments = new List<FirstLevelDocument>();
+            var complexDocument = new Document();
 
-            for (var j = 0; j < innerDocumentOneCount; j++)
+            for (var j = 0; j < documentsCount; j++)
             {
                 var firstLevelDocument = new FirstLevelDocument();
-                firstLevelDocument.InnerDocuments = new List<SecondLevelDocument>();
 
-                for (var k = 0; k < innerDocumentTwoCount; k++)
+                for (var k = 0; k < documentsCount; k++)
                 {
-                    var secondLevelDocument = new SecondLevelDocument();
-
-                    firstLevelDocument.InnerDocuments.Add(secondLevelDocument);
+                    firstLevelDocument.InnerDocuments.Add(new SecondLevelDocument());
                 }
 
                 complexDocument.InnerDocuments.Add(firstLevelDocument);
