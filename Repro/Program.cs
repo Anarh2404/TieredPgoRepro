@@ -7,35 +7,42 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using Repro;
 
-
-var data = CreateDocument();
-for (int i = 0; i < 1000; i++)
+namespace TieredPGORepro
 {
-    Console.WriteLine(i);
-    var bytes = data.ToBson();
-    _ = BsonSerializer.Deserialize<Document>(bytes);
-}
-
-Console.WriteLine("Done");
-
-
-Document CreateDocument()
-{
-    const int documentsCount = 50;
-
-    var complexDocument = new Document();
-
-    for (var j = 0; j < documentsCount; j++)
+    public class Program
     {
-        var firstLevelDocument = new FirstLevelDocument();
-
-        for (var k = 0; k < documentsCount; k++)
+        public static void Main(string[] args)
         {
-            firstLevelDocument.InnerDocuments.Add(new SecondLevelDocument());
+            var data = CreateDocument();
+            for (int i = 0; i < 1000; i++)
+            {
+                Console.WriteLine(i);
+                var bytes = data.ToBson();
+                _ = BsonSerializer.Deserialize<Document>(bytes);
+            }
+
+            Console.WriteLine("Done");
         }
+        
+        static Document CreateDocument()
+        {
+            const int documentsCount = 50;
 
-        complexDocument.InnerDocuments.Add(firstLevelDocument);
+            var complexDocument = new Document();
+
+            for (var j = 0; j < documentsCount; j++)
+            {
+                var firstLevelDocument = new FirstLevelDocument();
+
+                for (var k = 0; k < documentsCount; k++)
+                {
+                    firstLevelDocument.InnerDocuments.Add(new SecondLevelDocument());
+                }
+
+                complexDocument.InnerDocuments.Add(firstLevelDocument);
+            }
+
+            return complexDocument;
+        }
     }
-
-    return complexDocument;
 }
